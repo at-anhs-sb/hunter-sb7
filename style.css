@@ -1,0 +1,1707 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(255, 40, 50, 0.12),
+            transparent 35%
+        ),
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #fff8f8 50%,
+            #ffffff 100%
+        );
+
+    color: #ffffff;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   TEXT SELECTION
+   ========================================================= */
+
+::selection {
+    background: #ff202d;
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   MAIN PAGE CONTENT
+   ========================================================= */
+
+main,
+#hunterContent {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    min-height: 100vh;
+}
+
+
+.door-system {
+    position: fixed;
+
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    min-width: 100%;
+    min-height: 100%;
+
+    z-index: 99999;
+
+    overflow: hidden;
+
+    pointer-events: auto;
+
+    background: #190103;
+}
+
+
+/* =========================================================
+   DOOR BACKGROUND
+   ========================================================= */
+
+.door-system::before {
+    content: "";
+
+    transition: opacity 0.8s ease;
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255, 0, 20, 0.08),
+            transparent 50%,
+            rgba(255, 0, 20, 0.08)
+        ),
+        repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.025) 0px,
+            rgba(255, 255, 255, 0.025) 1px,
+            transparent 1px,
+            transparent 7px
+        ),
+        linear-gradient(
+            180deg,
+            #370308,
+            #150103
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   DOOR PANELS
+   ========================================================= */
+
+.door-panel {
+    position: absolute;
+
+    top: 0;
+
+    width: 50vw;
+    height: 100vh;
+
+    z-index: 3;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.025) 0px,
+            rgba(255, 255, 255, 0.025) 1px,
+            transparent 1px,
+            transparent 7px
+        ),
+        linear-gradient(
+            180deg,
+            #50080e 0%,
+            #260307 50%,
+            #120103 100%
+        );
+
+    border: 2px solid rgba(255, 70, 70, 0.75);
+
+    box-shadow:
+        inset 0 0 60px rgba(255, 0, 0, 0.15),
+        inset 0 0 20px rgba(0, 0, 0, 0.9),
+        0 0 20px rgba(255, 30, 30, 0.2);
+
+    transition:
+        transform 1.25s cubic-bezier(0.77, 0, 0.175, 1);
+
+    will-change: transform;
+}
+
+
+.door-left {
+    left: 0;
+
+    border-right:
+        1px solid rgba(255, 80, 80, 0.8);
+}
+
+
+.door-right {
+    right: 0;
+
+    border-left:
+        1px solid rgba(255, 80, 80, 0.8);
+}
+
+
+/* =========================================================
+   DOOR INNER BORDER
+   ========================================================= */
+
+.door-panel::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 12px;
+
+    border:
+        1px solid rgba(255, 100, 100, 0.45);
+
+    border-radius: 10px;
+
+    box-shadow:
+        inset 0 0 15px rgba(255, 0, 0, 0.15),
+        0 0 10px rgba(255, 30, 30, 0.15);
+
+    pointer-events: none;
+}
+
+
+.door-system.open .door-left,
+.door-system.door-open .door-left {
+    transform: translateX(-100%);
+}
+
+
+.door-system.open .door-right,
+.door-system.door-open .door-right {
+    transform: translateX(100%);
+}
+
+/* removes overlay */
+
+.door-system.door-open {
+    background: transparent;
+    pointer-events: none;
+}
+
+.door-system.door-open::before {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+/* Keep EXIT clickable */
+.door-system.door-open .door-exit {
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   DOOR CONTENT
+   ========================================================= */
+
+.door-content {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 5;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.45s ease,
+        transform 0.7s ease;
+}
+
+
+.door-content-title {
+    margin-bottom: 12px;
+
+    color: #ffffff;
+
+    font-size: clamp(
+        2rem,
+        6vw,
+        5rem
+    );
+
+    font-weight: 900;
+
+    letter-spacing:
+        0.15em;
+
+    text-shadow:
+        0 0 5px #ffffff,
+        0 0 15px #ff3030,
+        0 0 35px #ff1010;
+}
+
+
+.door-content-subtitle {
+    color: #ffb0b0;
+
+    font-size: clamp(
+        0.8rem,
+        2vw,
+        1.3rem
+    );
+
+    font-weight: 700;
+
+    letter-spacing:
+        0.25em;
+
+    text-transform: uppercase;
+
+    text-shadow:
+        0 0 10px #ff3030;
+}
+
+
+/* Hide door title after opening */
+
+.door-system.open .door-content,
+.door-system.door-open .door-content {
+    opacity: 0;
+
+    transform:
+        scale(1.15);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   OPEN ENTRANCE BUTTON
+   ========================================================= */
+
+.door-trigger {
+    position: absolute;
+
+    left: 50%;
+    bottom: 9%;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 10;
+
+    min-width: 160px;
+
+    padding:
+        12px 25px;
+
+    border:
+        1px solid rgba(255, 180, 180, 0.9);
+
+    border-radius: 999px;
+
+    background:
+        rgba(30, 0, 3, 0.85);
+
+    color: #ffffff;
+
+    font-size: 0.9rem;
+
+    font-weight: 900;
+
+    letter-spacing:
+        0.2em;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 12px rgba(255, 40, 40, 0.35);
+
+    transition:
+        background 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease,
+        opacity 0.4s ease;
+}
+
+
+.door-trigger:hover {
+    background:
+        #8f1018;
+
+    box-shadow:
+        0 0 10px #ff3030,
+        0 0 30px rgba(255, 30, 30, 0.7);
+
+    transform:
+        translateX(-50%)
+        scale(1.05);
+}
+
+
+.door-trigger:active {
+    transform:
+        translateX(-50%)
+        scale(0.96);
+}
+
+
+/* Hide open button after opening */
+
+.door-system.open .door-trigger,
+.door-system.door-open .door-trigger {
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   EXIT BUTTON
+   ========================================================= */
+
+.door-exit {
+    position: fixed;
+
+    top: 25px;
+    right: 25px;
+
+    z-index: 100000;
+
+    padding:
+        10px 18px;
+
+    border:
+        1px solid rgba(255, 100, 100, 0.8);
+
+    border-radius: 8px;
+
+    background:
+        rgba(30, 0, 3, 0.9);
+
+    color: #ffffff;
+
+    font-weight: 900;
+
+    letter-spacing:
+        0.15em;
+
+    cursor: pointer;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transform:
+        translateY(-10px);
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease,
+        background 0.25s ease;
+}
+
+
+.door-exit:hover {
+    background: #a00e18;
+
+    box-shadow:
+        0 0 15px rgba(255, 30, 30, 0.7);
+}
+
+
+/*
+   Show EXIT after opening.
+*/
+
+.door-system.open .door-exit,
+.door-system.door-open .door-exit {
+    opacity: 1;
+
+    pointer-events: auto;
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   FULL-WIDTH HUNTER SIDEBAR
+   ========================================================= */
+
+.hunter-sidebar {
+    width: 100%;
+
+    min-width: 100%;
+
+    height: 100vh;
+
+    min-height: 100vh;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+}
+
+
+/* =========================================================
+   BANNER
+   ========================================================= */
+
+.hunter-banner {
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =========================================================
+   MARQUEE
+   ========================================================= */
+
+.marquee {
+    width: 100%;
+
+    min-height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    overflow: hidden;
+
+    margin:
+        12px 0;
+
+    padding:
+        8px 0;
+
+    border:
+        2px solid #8f171e;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #570b11,
+            #80151d,
+            #570b11
+        );
+
+    box-shadow:
+        0 0 15px rgba(255, 40, 40, 0.35);
+
+    color: #ffffff;
+}
+
+
+.marquee-track {
+    display: inline-block;
+
+    white-space: nowrap;
+
+    min-width: max-content;
+
+    padding-left: 100%;
+
+    font-size:
+        clamp(
+            0.9rem,
+            2vw,
+            1.2rem
+        );
+
+    font-weight: 900;
+
+    letter-spacing:
+        0.12em;
+
+    animation:
+        hunterMarquee
+        18s linear infinite;
+
+    text-shadow:
+        0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+
+@keyframes hunterMarquee {
+
+    from {
+        transform:
+            translateX(0);
+    }
+
+    to {
+        transform:
+            translateX(-100%);
+    }
+
+}
+
+
+/* =========================================================
+   TEAM TITLE
+   ========================================================= */
+
+.team-title {
+    width: 100%;
+
+    margin:
+        25px 0;
+
+    padding:
+        8px;
+
+    text-align: center;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(
+            2rem,
+            5vw,
+            3rem
+        );
+
+    font-weight: 900;
+
+    text-shadow:
+        0 0 5px #ffffff,
+        0 0 15px #ff3333,
+        0 0 30px #ff3333;
+}
+
+
+/* =========================================================
+   STANDARD HUNTER CARD
+   ========================================================= */
+
+.hunter-card {
+    width: 100%;
+
+    margin:
+        18px 0;
+
+    padding:
+        25px 15px;
+
+    border:
+        2px solid #b51b24;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #260205,
+            #74141d,
+            #260205
+        );
+
+    box-shadow:
+        0 0 12px rgba(255, 30, 30, 0.3),
+        inset 0 0 30px rgba(0, 0, 0, 0.35);
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   OWNER
+   ========================================================= */
+
+.owner-name {
+    margin:
+        5px 0;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(
+            1rem,
+            2vw,
+            1.35rem
+        );
+
+    font-weight: 800;
+
+    text-shadow:
+        0 0 5px rgba(255,255,255,0.5);
+}
+
+
+.owner-label {
+    margin-top: 5px;
+
+    color: #ffc0c0;
+
+    font-size: 0.95rem;
+
+    font-style: italic;
+}
+
+
+/* =========================================================
+   WELCOME IMAGE
+   ========================================================= */
+
+.welcome-image {
+    display: block;
+
+    width: 200px;
+    height: 200px;
+
+    max-width: 80vw;
+
+    margin:
+        12px auto;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+    border:
+        2px solid #ff3030;
+
+    box-shadow:
+        0 0 10px #ff2020,
+        0 0 30px rgba(255, 0, 0, 0.45);
+}
+
+
+.welcome-text {
+    margin-top: 15px;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(
+            1.2rem,
+            3vw,
+            1.7rem
+        );
+
+    font-weight: 900;
+}
+
+
+.welcome-tagline {
+    margin-top: 8px;
+
+    color: #ffffff;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   FEATURED USER
+   ========================================================= */
+
+.card-label,
+.titled-title {
+    color: #ffffff;
+
+    font-size: 1.4rem;
+
+    font-weight: 900;
+}
+
+
+.featured-user {
+    margin:
+        15px 0;
+
+    color: #ffb0b0;
+
+    font-size: 1.5rem;
+
+    font-weight: 900;
+}
+
+
+.small-note {
+    color: #cccccc;
+
+    font-size: 0.9rem;
+
+    font-style: italic;
+}
+
+
+/* =========================================================
+   GOLD CARD
+   ========================================================= */
+
+.gold-card {
+    border-color: #dcae2e;
+
+    background:
+        linear-gradient(
+            110deg,
+            #241803,
+            #735615,
+            #241803
+        );
+
+    box-shadow:
+        0 0 18px rgba(255, 190, 30, 0.35);
+}
+
+
+.gold-label {
+    color: #ffe27a;
+
+    font-size: 1.4rem;
+
+    font-weight: 900;
+
+    text-shadow:
+        0 0 8px #ffb000;
+}
+
+
+.gold-user {
+    margin:
+        15px 0;
+
+    color: #ffffff;
+
+    font-size: 1.5rem;
+
+    font-weight: 900;
+}
+
+
+.gold-note {
+    color: #ffe9a0;
+
+    font-style: italic;
+}
+
+
+/* =========================================================
+   PLAYERS
+   ========================================================= */
+
+.player {
+    width: min(
+        600px,
+        95%
+    );
+
+    margin:
+        10px auto;
+
+    padding:
+        10px;
+
+    border-radius: 8px;
+
+    background:
+        rgba(0, 0, 0, 0.25);
+
+    color: #ffffff;
+
+    font-weight: 800;
+}
+
+
+.title-badge {
+    display: inline-block;
+
+    min-width: 40px;
+
+    margin-right: 8px;
+
+    padding:
+        4px 7px;
+
+    border-radius: 5px;
+
+    background: #9d111a;
+
+    color: #ffffff;
+
+    font-size: 0.8rem;
+
+    font-weight: 900;
+}
+
+
+.player-note {
+    margin-top: 15px;
+
+    color: #ffb0b0;
+
+    font-style: italic;
+}
+
+
+/* =========================================================
+   PHONK RACK
+   ========================================================= */
+
+.phonk-rack {
+    width: 100%;
+
+    margin:
+        20px 0;
+
+    padding:
+        15px;
+
+    border:
+        2px solid #7f141b;
+
+    border-radius: 14px;
+
+    background:
+        #150103;
+
+    box-shadow:
+        0 0 18px rgba(255, 0, 0, 0.25);
+}
+
+
+.phonk-header {
+    padding:
+        12px;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #580a10,
+            #921821,
+            #580a10
+        );
+
+    color: #ffffff;
+
+    text-align: center;
+
+    font-weight: 900;
+
+    letter-spacing:
+        0.12em;
+}
+
+
+.phonk-scroll {
+    width: 100%;
+
+    overflow-x: auto;
+
+    overflow-y: hidden;
+
+    padding:
+        15px 0;
+}
+
+
+.phonk-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            15,
+            minmax(
+                280px,
+                1fr
+            )
+        );
+
+    gap: 14px;
+
+    width: max-content;
+}
+
+
+.phonk-track {
+    width: 280px;
+
+    min-height: 170px;
+
+    border:
+        1px solid #8c161e;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    background: #080000;
+
+    box-shadow:
+        0 0 10px rgba(255, 0, 0, 0.2);
+}
+
+
+.phonk-track iframe {
+    display: block;
+
+    width: 100%;
+
+    height: 170px;
+
+    border: 0;
+}
+
+
+/* =========================================================
+   COMPACT CARDS
+   ========================================================= */
+
+.compact-card {
+    width: 100%;
+
+    margin:
+        18px 0;
+
+    padding:
+        20px;
+
+    border:
+        2px solid #9c171e;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #250205,
+            #651119,
+            #250205
+        );
+
+    box-shadow:
+        0 0 12px rgba(255, 20, 20, 0.25);
+
+    text-align: center;
+}
+
+
+.compact-card.tall {
+    min-height: 250px;
+}
+
+
+.section-title {
+    margin-bottom: 15px;
+
+    color: #ffffff;
+
+    font-size: 1.3rem;
+
+    font-weight: 900;
+}
+
+
+/* =========================================================
+   LINK LIST
+   ========================================================= */
+
+.link-list {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 10px;
+
+    width: 100%;
+}
+
+
+.hunter-link {
+    display: block;
+
+    width: min(
+        700px,
+        95%
+    );
+
+    padding:
+        12px 18px;
+
+    border:
+        1px solid #bd252e;
+
+    border-radius: 9px;
+
+    background:
+        rgba(20, 0, 2, 0.55);
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-weight: 800;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.hunter-link:hover {
+    background:
+        #8d111a;
+
+    box-shadow:
+        0 0 15px rgba(255, 40, 40, 0.5);
+
+    transform:
+        translateY(-2px);
+}
+
+
+/* =========================================================
+   INVITE
+   ========================================================= */
+
+.invite-card {
+    width: 100%;
+
+    margin:
+        20px 0;
+
+    padding:
+        30px 20px;
+
+    border:
+        2px solid #c0252e;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #3c060a,
+            #86151e,
+            #3c060a
+        );
+
+    text-align: center;
+
+    box-shadow:
+        0 0 20px rgba(255, 20, 20, 0.35);
+}
+
+
+.invite-title {
+    font-size:
+        clamp(
+            1.3rem,
+            3vw,
+            2rem
+        );
+
+    font-weight: 900;
+}
+
+
+.invite-description {
+    max-width: 700px;
+
+    margin:
+        15px auto;
+
+    line-height: 1.6;
+
+    color: #ffffff;
+}
+
+
+.copy-button {
+    padding:
+        13px 25px;
+
+    border:
+        0;
+
+    border-radius: 8px;
+
+    background:
+        #b71924;
+
+    color: #ffffff;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.copy-button:hover {
+    background:
+        #e0212e;
+
+    box-shadow:
+        0 0 20px rgba(255, 40, 40, 0.55);
+
+    transform:
+        scale(1.04);
+}
+
+
+/* =========================================================
+   MILESTONES
+   ========================================================= */
+
+.milestone-card {
+    width: 100%;
+
+    margin:
+        20px 0;
+
+    padding:
+        25px;
+
+    border:
+        2px solid #9f1a22;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #270205,
+            #681119,
+            #270205
+        );
+
+    text-align: center;
+}
+
+
+.milestone-list {
+    line-height: 2;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   CALENDAR
+   ========================================================= */
+
+.calendar-frame {
+    display: block;
+
+    width: 100%;
+
+    min-height: 500px;
+
+    margin:
+        20px 0;
+
+    border: 0;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   INFO BOXES
+   ========================================================= */
+
+.info-box {
+    width: 100%;
+
+    margin:
+        20px 0;
+
+    padding:
+        25px 20px;
+
+    border:
+        2px solid #a91b24;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #280205,
+            #70121a,
+            #280205
+        );
+
+    text-align: center;
+
+    box-shadow:
+        0 0 12px rgba(255, 20, 20, 0.25);
+}
+
+
+.info-box-title {
+    color: #ffffff;
+
+    font-size: 1.4rem;
+
+    font-weight: 900;
+}
+
+
+.info-box p {
+    color: #ffffff;
+
+    line-height: 1.6;
+}
+
+
+.red-button {
+    display: inline-block;
+
+    margin-top: 10px;
+
+    padding:
+        12px 20px;
+
+    border-radius: 8px;
+
+    background:
+        #a71720;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-weight: 900;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.red-button:hover {
+    background:
+        #df202c;
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 0 18px rgba(255, 30, 30, 0.55);
+}
+
+
+/* =========================================================
+   OWNER MESSAGE
+   ========================================================= */
+
+.owner-message {
+    width: 100%;
+
+    margin:
+        20px 0;
+
+    padding:
+        30px 20px;
+
+    border:
+        2px solid #9d171f;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #250205,
+            #681119,
+            #250205
+        );
+
+    text-align: center;
+}
+
+
+.owner-message h3 {
+    margin-top: 0;
+
+    color: #ffffff;
+
+    font-size: 1.5rem;
+
+    text-shadow:
+        0 0 10px #ff3030;
+}
+
+
+.owner-message hr {
+    width: 80%;
+
+    border: 0;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #ff4040,
+            transparent
+        );
+}
+
+
+.owner-message p {
+    color: #ffffff;
+
+    line-height: 1.7;
+}
+
+
+.good-luck {
+    color: #ffb0b0 !important;
+}
+
+
+/* =========================================================
+   FOOTER / CONTRIBUTION
+   ========================================================= */
+
+.hunter-divider {
+    width: 90%;
+
+    margin:
+        30px auto;
+
+    border: 0;
+
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #c02029,
+            transparent
+        );
+}
+
+
+.contribution {
+    width: 100%;
+
+    padding:
+        25px 15px;
+
+    margin-bottom: 30px;
+
+    text-align: center;
+}
+
+
+.contribution-title {
+    color: #a71922;
+
+    font-size: 1.1rem;
+
+    font-weight: 900;
+
+    letter-spacing:
+        0.15em;
+}
+
+
+.contribution-text {
+    margin-top: 10px;
+
+    color: #555;
+
+    font-weight: 900;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   SCAN LINE
+   ========================================================= */
+
+.scan-line {
+    position: fixed;
+
+    left: 0;
+
+    top: 0;
+
+    width: 100%;
+
+    height: 2px;
+
+    z-index: 100001;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 40, 40, 0.8),
+            transparent
+        );
+
+    box-shadow:
+        0 0 12px #ff2020;
+
+    animation:
+        scanLineMove
+        5s linear infinite;
+
+    opacity: 0.35;
+}
+
+
+@keyframes scanLineMove {
+
+    0% {
+        transform:
+            translateY(-10px);
+    }
+
+    100% {
+        transform:
+            translateY(100vh);
+    }
+
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+
+::-webkit-scrollbar-track {
+    background:
+        #160103;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background:
+        linear-gradient(
+            180deg,
+            #8d111a,
+            #d51f2b
+        );
+
+    border-radius: 10px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background:
+        #f02a35;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .door-content-title {
+        font-size: 2rem;
+
+        letter-spacing:
+            0.08em;
+    }
+
+
+    .door-content-subtitle {
+        font-size: 0.7rem;
+
+        letter-spacing:
+            0.12em;
+    }
+
+
+    .door-trigger {
+        bottom: 12%;
+
+        min-width: 145px;
+
+        padding:
+            10px 18px;
+
+        font-size: 0.75rem;
+    }
+
+
+    .door-exit {
+        top: 15px;
+        right: 15px;
+
+        padding:
+            8px 13px;
+
+        font-size: 0.7rem;
+    }
+
+
+    .hunter-card,
+    .compact-card,
+    .info-box,
+    .invite-card,
+    .milestone-card,
+    .owner-message {
+        border-radius: 10px;
+    }
+
+
+    .welcome-image {
+        width: 160px;
+        height: 160px;
+    }
+
+
+    .phonk-rack {
+        padding: 10px;
+    }
+
+
+    .phonk-track {
+        width: 250px;
+    }
+
+
+    .calendar-frame {
+        min-height: 400px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCE MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+    }
+
+}
+
+/* =========================================================
+   HUNTER TEAM PAGE WRAPPER
+   ========================================================= */
+
+.hunter-page {
+    position: relative;
+
+    width: calc(100% - 24px);
+
+    min-height: 100vh;
+
+    margin:
+        12px auto;
+
+    padding:
+        10px 0 40px;
+
+    border:
+        3px solid #9f1821;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #3b0509 0%,
+            #250204 45%,
+            #180103 100%
+        );
+
+    box-shadow:
+        0 0 20px rgba(255, 30, 30, 0.45),
+        0 0 60px rgba(255, 0, 0, 0.18),
+        inset 0 0 50px rgba(0, 0, 0, 0.45);
+
+    overflow: hidden;
+}
